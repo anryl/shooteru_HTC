@@ -1,7 +1,8 @@
 clear
 make shooter_u_defconfig
 #make -j16 ARCH=arm CROSS_COMPILE=/home/anryl/gits/arm-eabi-4.4.3/bin/arm-eabi- CONFIG_MAX_CLOCK=1836000
-make -j16 ARCH=arm CROSS_COMPILE=/home/anryl/Downloads/android-toolchain-eabi/bin/arm-eabi-  CONFIG_MAX_CLOCK=1836000
+#make -j16 ARCH=arm CROSS_COMPILE=/home/anryl/Downloads/android-toolchain-eabi/bin/arm-eabi-  CONFIG_MAX_CLOCK=1836000
+make -j16 ARCH=arm CROSS_COMPILE=/home/anryl/Downloads/gcc-linaro-arm-linux-gnueabihf-2012.09-20120921_linux/bin/arm-linux-gnueabihf-
 rm /home/anryl/build/42/system/lib/modules/*.ko
 rm /home/anryl/build/42/kernel/zImage
 find -iname '*.ko' -exec cp {} /home/anryl/build/42/system/lib/modules/ \;

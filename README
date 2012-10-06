@@ -1,5 +1,5 @@
-used compiler (Linaro GCC 4.7-2012.08)
-https://launchpad.net/linaro-toolchain-binaries/+milestone/2012.08
+gcc version 4.7.2 20120910 (prerelease) (crosstool-NG linaro-1.13.1-2012.09-20120921 - Linaro GCC 2012.09)
+https://launchpad.net/linaro-toolchain-binaries/+milestone/2012.09
 
 
 	Linux kernel release 3.x <http://kernel.org/>
