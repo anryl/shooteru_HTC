@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, Code Aurora Forum. All rights reserved.
+ * Copyright (c) 2010-2011, Code Aurora Forum. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -43,7 +43,7 @@
 void q6asm_aac_in_cb(uint32_t opcode, uint32_t token,
 		uint32_t *payload, void *priv)
 {
-	struct q6audio_in *audio = (struct q6audio_in *)priv;
+	struct q6audio_in * audio = (struct q6audio_in *)priv;
 	unsigned long flags;
 
 	pr_debug("%s:session id %d: opcode[0x%x]\n", __func__,

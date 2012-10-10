@@ -2,6 +2,7 @@
  *  Block device elevator/IO-scheduler.
  *
  *  Copyright (C) 2000 Andrea Arcangeli <andrea@suse.de> SuSE
+ *  Copyright (c) 2012, Chad Goodman <chad.goodman@gmail.com>
  *
  * 30042000 Jens Axboe <axboe@kernel.dk> :
  *
@@ -52,6 +53,30 @@ static const int elv_hash_shift = 6;
 		(hash_long(ELV_HASH_BLOCK((sec)), elv_hash_shift))
 #define ELV_HASH_ENTRIES	(1 << elv_hash_shift)
 #define rq_hash_key(rq)		(blk_rq_pos(rq) + blk_rq_sectors(rq))
+
+/*
+ * scheduler cmdline options
+ */
+#ifdef CONFIG_CMDLINE_OPTIONS
+static struct elevator_type *elevator_find(const char *name);
+
+char cmdline_scheduler[ELV_NAME_MAX] = CONFIG_DEFAULT_IOSCHED;
+static int __init cy8c_read_scheduler_cmdline(char *scheduler)
+{
+	struct elevator_type *e;
+
+	e = elevator_find(scheduler);
+	if (!e) {
+		strcpy(cmdline_scheduler, scheduler);
+		printk(KERN_INFO "[cmdline_scheduler]: scheduler set to '%s'", cmdline_scheduler);
+	} else {
+		strcpy(cmdline_scheduler, CONFIG_DEFAULT_IOSCHED);
+		printk(KERN_INFO "[cmdline_scheduler]: No valid input found. Using '%s' as default", cmdline_scheduler);
+	}
+	return 1;
+}
+__setup("scheduler=", cy8c_read_scheduler_cmdline);
+#endif
 
 /*
  * Query io scheduler to see if the current process issuing bio may be
@@ -266,7 +291,11 @@ int elevator_init(struct request_queue *q, char *name)
 	}
 
 	if (!e) {
+#ifdef CONFIG_CMDLINE_OPTIONS
+		e = elevator_get(cmdline_scheduler);
+#else
 		e = elevator_get(CONFIG_DEFAULT_IOSCHED);
+#endif
 		if (!e) {
 			printk(KERN_ERR
 				"Default I/O scheduler not found. " \
@@ -609,6 +638,35 @@ void elv_requeue_request(struct request_queue *q, struct request *rq)
 	__elv_add_request(q, rq, ELEVATOR_INSERT_REQUEUE);
 }
 
+/**
+ * elv_reinsert_request() - Insert a request back to the scheduler
+ * @q:		request queue where request should be inserted
+ * @rq:		request to be inserted
+ *
+ * This function returns the request back to the scheduler to be
+ * inserted as if it was never dispatched
+ *
+ * Return: 0 on success, error code on failure
+ */
+int elv_reinsert_request(struct request_queue *q, struct request *rq)
+{
+	/*
+	 * it already went through dequeue, we need to decrement the
+	 * in_flight count again
+	 */
+	if (blk_account_rq(rq)) {
+		q->in_flight[rq_is_sync(rq)]--;
+		if (rq->cmd_flags & REQ_SORTED)
+			elv_deactivate_rq(q, rq);
+	}
+
+	rq->cmd_flags &= ~REQ_STARTED;
+	if (q->elevator->elevator_type->ops.elevator_reinsert_req_fn)
+		return q->elevator->elevator_type->ops.elevator_reinsert_req_fn(q, rq);
+
+	return -EPERM;
+}
+
 void elv_drain_elevator(struct request_queue *q)
 {
 	static int printed;
@@ -896,6 +954,11 @@ void elv_completed_request(struct request_queue *q, struct request *rq)
 {
 	struct elevator_queue *e = q->elevator;
 
+	if (blk_mark_rq_urgent(rq)) {
+		q->notified_urgent = false;
+		q->urgent_req = NULL;
+	}
+	blk_clear_rq_urgent(rq);
 	/*
 	 * request is released from the driver, io must be done
 	 */

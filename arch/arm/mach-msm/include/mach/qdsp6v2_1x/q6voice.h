@@ -41,6 +41,7 @@
 #define VOICE_DEV_DISABLED      0
 
 #define MAX_VOC_PKT_SIZE 322
+#define SESSION_NAME_LEN 20
 
 struct voice_header {
 	uint32_t id;
@@ -111,7 +112,7 @@ enum {
 /* Set the voice timing parameters. */
 
 struct vss_imvm_cmd_create_full_control_session_t {
-	char name[20];
+	char name[SESSION_NAME_LEN];
 	/*
 	 * A variable-sized stream name.
 	 *
@@ -282,7 +283,7 @@ struct mvm_set_voice_timing_cmd {
 /* Stop the in-call music delivery on the Tx voice path. */
 
 struct vss_istream_cmd_create_passive_control_session_t {
-	char name[20];
+	char name[SESSION_NAME_LEN];
 	/**<
 	* A variable-sized stream name.
 	*
@@ -325,7 +326,7 @@ struct vss_istream_cmd_create_full_control_session_t {
 	/* Rx vocoder type. (Refer to VSS_MEDIA_ID_XXX). */
 	uint32_t network_id;
 	/* Network ID. (Refer to VSS_NETWORK_ID_XXX). */
-	char name[20];
+	char name[SESSION_NAME_LEN];
 	/*
 	 * A variable-sized stream name.
 	 *

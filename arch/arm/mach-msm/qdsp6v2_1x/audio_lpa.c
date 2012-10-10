@@ -744,10 +744,8 @@ static long audio_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
 		pr_debug("%s: bytes_consumed:lsb = %d, msb = %d,"
 			"timestamp = %lld\n", __func__,
 			audio->bytes_consumed, stats.unused[0], timestamp);
-		if (copy_to_user((void *) arg, &stats, sizeof(stats))) {
-				pr_debug("%s(%d): copy_to_user return --\n", __func__, __LINE__);
+		if (copy_to_user((void *) arg, &stats, sizeof(stats)))
 				return -EFAULT;
-		}
 		pr_debug("%s: audio_get_stats command --\n", __func__);
 		return 0;
 	}
@@ -1425,17 +1423,11 @@ static int audio_open(struct inode *inode, struct file *file)
 	audio->device_events = AUDDEV_EVT_STREAM_VOL_CHG | AUDDEV_EVT_DEV_RDY;
 	audio->drv_status &= ~ADRV_STATUS_PAUSE;
 
-	pr_debug("%s: auddev_register_evt_listner[%d] ++\n",
-						__func__,
-						audio->ac->session);
 	rc = auddev_register_evt_listner(audio->device_events,
 					AUDDEV_CLNT_DEC,
 					audio->ac->session,
 					lpa_listner,
 					(void *)audio);
-	pr_debug("%s: auddev_register_evt_listner[%d] --\n",
-						__func__,
-						audio->ac->session);
 	if (rc) {
 		pr_aud_err("%s: failed to register listner\n", __func__);
 		goto err;
@@ -1455,7 +1447,6 @@ static int audio_open(struct inode *inode, struct file *file)
 	audio->suspend_ctl.node.suspend = audlpa_suspend;
 	audio->suspend_ctl.audio = audio;
 	register_early_suspend(&audio->suspend_ctl.node);
-	pr_aud_info("%s(%d) \n", __func__, __LINE__);
 #endif
 	for (i = 0; i < AUDLPA_EVENT_NUM; i++) {
 		e_node = kmalloc(sizeof(struct audlpa_event), GFP_KERNEL);
