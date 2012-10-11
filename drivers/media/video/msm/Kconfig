@@ -24,6 +24,12 @@ choice
 
 endchoice
 
+config CM10_BUILD
+	bool "support till fixed 3D on CM"
+	default n
+	help
+		This enables 2D camera to work on CM
+
 config 720P_CAMERA
         bool "Qualcomm MSM camera with 720P video support"
         depends on MSM_CAMERA_LEGACY

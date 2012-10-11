@@ -2782,7 +2782,11 @@ static void vfe31_process_camif_sof_irq(void)
 		CDBG("Skip the SOF notification when HFR enabled\n");
 		return;
 	}
-//	vfe31_send_msg_no_payload(MSG_ID_SOF_ACK);
+#if defined(CONFIG_CM10_BUILD)
+	//vfe31_send_msg_no_payload(MSG_ID_SOF_ACK);
+#else
+	vfe31_send_msg_no_payload(MSG_ID_SOF_ACK);
+#endif
 	vfe31_ctrl->vfeFrameId++;
 	CDBG("camif_sof_irq, frameId = %d\n", vfe31_ctrl->vfeFrameId);
 

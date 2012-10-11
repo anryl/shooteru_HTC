@@ -794,7 +794,9 @@ enum VFE31_MESSAGE_ID {
 	MSG_ID_VIOLATION,
 	MSG_ID_CAMIF_ERROR,
 	MSG_ID_BUS_OVERFLOW,
-//	MSG_ID_SOF_ACK,
+#ifndef CONFIG_CM10_BUILD
+	MSG_ID_SOF_ACK,
+#endif
 };
 
 struct vfe_msg_stats{
