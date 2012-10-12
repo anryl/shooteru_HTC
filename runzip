@@ -1,0 +1,18 @@
+#!/bin/sh
+clear
+if [ ! -z "$1" ] ;then
+ SSS=$PWD
+ cd ~/build/CM
+ rm ../akernel_DTCM_$1.zip
+ zip -r ../akernel_DTCM_$1 .
+ cd ~/build/CMOC
+ rm ../akernel_DTCMOC_$1.zip
+ zip -r ../akernel_DTCMOC_$1 .
+ cd ~/build/HTC
+ rm ../akernel_HTC_$1.zip
+ zip -r ../akernel_HTC_$1 .
+ cd ~/build/HTCOC
+ rm ../akernel_HTCOC_$1.zip
+ zip -r ../akernel_HTCOC_$1 .
+ cd $SSS 
+fi
