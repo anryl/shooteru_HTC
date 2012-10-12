@@ -1,0 +1,7 @@
+clear
+make shooter_u_SOC_defconfig
+make -j16 ARCH=arm CROSS_COMPILE=/home/anryl/GPL_toolchains/bin/arm-eabi- CONFIG_FORCE_OC=y
+rm /home/anryl/build/HTCOC/system/lib/modules/*.ko
+rm /home/anryl/build/HTCOC/kernel/zImage
+find -iname '*.ko' -exec cp {} /home/anryl/build/HTCOC/system/lib/modules/ \;
+find -iname 'zImage' -exec cp {} /home/anryl/build/HTCOC/kernel/ \;

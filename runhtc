@@ -1,7 +1,5 @@
 clear
 make shooter_u_S_defconfig
-#make -j16 ARCH=arm CROSS_COMPILE=/home/anryl/gits/arm-eabi-4.4.3/bin/arm-eabi- CONFIG_MAX_CLOCK=1836000
-#make -j16 ARCH=arm CROSS_COMPILE=/home/anryl/Downloads/android-toolchain-eabi/bin/arm-eabi-  CONFIG_MAX_CLOCK=1836000
 make -j16 ARCH=arm CROSS_COMPILE=/home/anryl/GPL_toolchains/bin/arm-eabi-
 rm /home/anryl/build/HTC/system/lib/modules/*.ko
 rm /home/anryl/build/HTC/kernel/zImage

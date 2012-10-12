@@ -1,0 +1,5 @@
+clear
+. runhtc
+. runhtcoc
+. runcm
+. runcmoc
