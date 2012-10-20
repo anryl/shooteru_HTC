@@ -3,7 +3,7 @@ if [ ! -z "$1" ] ;then
 clear
 . runhtc
 . runhtcoc
-. runcm
-. runcmoc
+#. runcm
+#. runcmoc
 . runzip $1
 fi

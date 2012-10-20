@@ -4,10 +4,10 @@ if [ ! -z "$1" ] ;then
  SSS=$PWD
  cd ~/build/CM
  rm ../akernel_DTCM_$1.zip
- zip -r ../akernel_DTCM_$1 .
+ #zip -r ../akernel_DTCM_$1 .
  cd ~/build/CMOC
  rm ../akernel_DTCMOC_$1.zip
- zip -r ../akernel_DTCMOC_$1 .
+ #zip -r ../akernel_DTCMOC_$1 .
  cd ~/build/HTC
  rm ../akernel_HTC_$1.zip
  zip -r ../akernel_HTC_$1 .

@@ -779,7 +779,7 @@ static void hub_activate(struct usb_hub *hub, enum hub_activation_type type)
 	 */
 	for (port1 = 1; port1 <= hdev->maxchild; ++port1) {
 		struct usb_device *udev = hdev->children[port1-1];
-		u16 portstatus, portchange;
+		u16 portstatus = 0, portchange = 0;
 
 		portstatus = portchange = 0;
 		status = hub_port_status(hub, port1, &portstatus, &portchange);
@@ -2053,8 +2053,8 @@ static int hub_port_wait_reset(struct usb_hub *hub, int port1,
 				struct usb_device *udev, unsigned int delay)
 {
 	int delay_time, ret;
-	u16 portstatus;
-	u16 portchange;
+	u16 portstatus = 0;
+	u16 portchange = 0;
 
 	for (delay_time = 0;
 			delay_time < HUB_RESET_TIMEOUT;
@@ -2176,7 +2176,7 @@ static int hub_port_reset(struct usb_hub *hub, int port1,
 static int hub_port_warm_reset(struct usb_hub *hub, int port)
 {
 	int ret;
-	u16 portstatus, portchange;
+	u16 portstatus = 0, portchange = 0;
 
 	if (!hub_is_superspeed(hub->hdev)) {
 		dev_err(hub->intfdev, "only USB3 hub support warm reset\n");
@@ -3385,12 +3385,12 @@ static void hub_events(void)
 	struct usb_interface *intf;
 	struct usb_hub *hub;
 	struct device *hub_dev;
-	u16 hubstatus;
-	u16 hubchange;
-	u16 portstatus;
-	u16 portchange;
-	int i, ret;
-	int connect_change;
+	u16 hubstatus = 0;
+	u16 hubchange = 0;
+	u16 portstatus = 0;
+	u16 portchange = 0;
+	int i = 0, ret = 0;
+	int connect_change = 0;
 
 	/*
 	 *  We restart the list every time to avoid a deadlock with
