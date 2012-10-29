@@ -1,9 +1,9 @@
 #!/bin/sh
 if [ ! -z "$1" ] ;then
 clear
-. runhtc
-. runhtcoc
-#. runcm
-#. runcmoc
-. runzip $1
+COMPILER=/home/anryl/GPL_toolchains/bin/arm-eabi-
+. runhtc $COMPILER shooter_u_SOC_defconfig HTCOC $1
+. runhtc $COMPILER shooter_u_S_defconfig HTC $1
+. runhtc $COMPILER shooter_u_CM_defconfig CM $1
+. runhtc $COMPILER shooter_u_CMOC_defconfig CMOC $1
 fi

@@ -1,7 +1,15 @@
+#!/bin/sh
 clear
-make shooter_u_S_defconfig
-make -j16 ARCH=arm CROSS_COMPILE=/home/anryl/GPL_toolchains/bin/arm-eabi-
-rm /home/anryl/build/HTC/system/lib/modules/*.ko
-rm /home/anryl/build/HTC/kernel/zImage
-find -iname '*.ko' -exec cp {} /home/anryl/build/HTC/system/lib/modules/ \;
-find -iname 'zImage' -exec cp {} /home/anryl/build/HTC/kernel/ \;
+echo make $2
+echo make -j16 ARCH=arm CROSS_COMPILE=$1 LOCALVERSION=$3$4
+make $2
+make -j16 ARCH=arm CROSS_COMPILE=$1 LOCALVERSION=$3$4
+rm /home/anryl/build/$3/system/lib/modules/*.ko
+rm /home/anryl/build/$3/kernel/zImage
+find -iname '*.ko' -exec cp {} /home/anryl/build/$3/system/lib/modules/ \;
+find -iname 'zImage' -exec cp {} /home/anryl/build/$3/kernel/ \;
+ SSS=$PWD
+ cd ~/build/$3
+ rm ../akernel_$3_$4.zip
+ zip -r ../akernel_$3_$4 .
+ cd $SSS 
