@@ -73,29 +73,22 @@ EXPORT_SYMBOL(gen_pool_create);
  *
  * Returns 0 on success or a -ve errno on failure.
  */
-int __must_check gen_pool_add_virt(struct gen_pool *pool, unsigned long virt, phys_addr_t phys,
+int gen_pool_add_virt(struct gen_pool *pool, unsigned long virt, phys_addr_t phys,
 		 size_t size, int nid)
 {
 	struct gen_pool_chunk *chunk;
-	size_t nbytes;
+	int nbits = size >> pool->min_alloc_order;
+	int nbytes = sizeof(struct gen_pool_chunk) +
+				BITS_TO_LONGS(nbits) * sizeof(long);
 
-	if (WARN_ON(!virt || virt + size < virt ||
-	    (virt & ((1 << pool->order) - 1))))
-		return -EINVAL;
-
-	size = size >> pool->order;
-	if (WARN_ON(!size))
-		return -EINVAL;
-
-	nbytes = sizeof *chunk + BITS_TO_LONGS(size) * sizeof *chunk->bits;
-	chunk = kzalloc_node(nbytes, GFP_KERNEL, nid);
-	if (!chunk)
+	chunk = kmalloc_node(nbytes, GFP_KERNEL | __GFP_ZERO, nid);
+	if (unlikely(chunk == NULL))
 		return -ENOMEM;
 
 	spin_lock_init(&chunk->lock);
 	chunk->phys_addr = phys;
-	chunk->start = virt >> pool->order;
-	chunk->size  = size;
+	chunk->start_addr = virt;
+	chunk->end_addr = virt + size;
 
 	write_lock(&pool->lock);
 	list_add(&chunk->next_chunk, &pool->chunks);
