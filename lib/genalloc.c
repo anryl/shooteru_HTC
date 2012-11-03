@@ -21,6 +21,7 @@ struct gen_pool {
 	rwlock_t lock;			/* protects chunks list */
 	struct list_head chunks;	/* list of chunks in this pool */
 	unsigned order;			/* minimum allocation order */
+		int min_alloc_order;		/* minimum allocation order */
 };
 
 /* General purpose special memory pool chunk descriptor. */
@@ -28,6 +29,8 @@ struct gen_pool_chunk {
 	spinlock_t lock;		/* protects bits */
 	struct list_head next_chunk;	/* next chunk in pool */
 	phys_addr_t phys_addr;		/* physical starting address of memory chunk */
+		unsigned long start_addr;	/* starting address of memory chunk */
+	unsigned long end_addr;		/* ending address of memory chunk */
 	unsigned long start;		/* start of memory chunk */
 	unsigned long size;		/* number of bits */
 	unsigned long bits[0];		/* bitmap for allocating memory chunk */
