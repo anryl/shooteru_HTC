@@ -21,7 +21,6 @@ struct gen_pool {
 	rwlock_t lock;			/* protects chunks list */
 	struct list_head chunks;	/* list of chunks in this pool */
 	unsigned order;			/* minimum allocation order */
-		int min_alloc_order;		/* minimum allocation order */
 };
 
 /* General purpose special memory pool chunk descriptor. */
@@ -29,8 +28,6 @@ struct gen_pool_chunk {
 	spinlock_t lock;		/* protects bits */
 	struct list_head next_chunk;	/* next chunk in pool */
 	phys_addr_t phys_addr;		/* physical starting address of memory chunk */
-		unsigned long start_addr;	/* starting address of memory chunk */
-	unsigned long end_addr;		/* ending address of memory chunk */
 	unsigned long start;		/* start of memory chunk */
 	unsigned long size;		/* number of bits */
 	unsigned long bits[0];		/* bitmap for allocating memory chunk */
@@ -76,22 +73,29 @@ EXPORT_SYMBOL(gen_pool_create);
  *
  * Returns 0 on success or a -ve errno on failure.
  */
-int gen_pool_add_virt(struct gen_pool *pool, unsigned long virt, phys_addr_t phys,
+int __must_check gen_pool_add_virt(struct gen_pool *pool, unsigned long virt, phys_addr_t phys,
 		 size_t size, int nid)
 {
 	struct gen_pool_chunk *chunk;
-	int nbits = size >> pool->min_alloc_order;
-	int nbytes = sizeof(struct gen_pool_chunk) +
-				BITS_TO_LONGS(nbits) * sizeof(long);
+	size_t nbytes;
 
-	chunk = kmalloc_node(nbytes, GFP_KERNEL | __GFP_ZERO, nid);
-	if (unlikely(chunk == NULL))
+	if (WARN_ON(!virt || virt + size < virt ||
+	    (virt & ((1 << pool->order) - 1))))
+		return -EINVAL;
+
+	size = size >> pool->order;
+	if (WARN_ON(!size))
+		return -EINVAL;
+
+	nbytes = sizeof *chunk + BITS_TO_LONGS(size) * sizeof *chunk->bits;
+	chunk = kzalloc_node(nbytes, GFP_KERNEL, nid);
+	if (!chunk)
 		return -ENOMEM;
 
 	spin_lock_init(&chunk->lock);
 	chunk->phys_addr = phys;
-	chunk->start_addr = virt;
-	chunk->end_addr = virt + size;
+	chunk->start = virt >> pool->order;
+	chunk->size  = size;
 
 	write_lock(&pool->lock);
 	list_add(&chunk->next_chunk, &pool->chunks);
