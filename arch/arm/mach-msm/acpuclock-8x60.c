@@ -181,8 +181,8 @@ static struct msm_bus_paths bw_level_tbl[] = {
 	[1] = BW_MBPS(1336), /* At least 167 MHz on bus. */
 	[2] = BW_MBPS(2008), /* At least 251 MHz on bus. */
 #if defined(CONFIG_FORCE_OC)
-	[3] = BW_MBPS(2832), /* At least 354 MHz on bus. */
-	[4] = BW_MBPS(3344), /* At least 418 MHz on bus. */
+	[3] = BW_MBPS(2472), /* At least 309 MHz on bus. */
+	[4] = BW_MBPS(2984), /* At least  373MHz on bus. */
 #else
 	[3] = BW_MBPS(2472), /* At least 309 MHz on bus. */
 #endif
