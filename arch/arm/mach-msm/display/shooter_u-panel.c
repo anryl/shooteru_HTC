@@ -416,13 +416,23 @@ static struct mipi_dsi_platform_data mipi_pdata = {
 	.vsync_gpio = 28,
 	.dsi_power_save   = mipi_panel_power,
 };
-
-#define BRI_SETTING_MIN		1 /*2*/
-#define BRI_SETTING_DEF		91 /*92*/
+/* htc values
+ #define BRI_SETTING_MIN		30
+#define BRI_SETTING_DEF		143
 #define BRI_SETTING_MAX		255
 
-#define PWM_MIN				7 
-#define PWM_DEFAULT			75
+#define PWM_MIN				8
+#define PWM_DEFAULT			91
+#define PWM_MAX				232
+ 
+ */
+
+#define BRI_SETTING_MIN		10 /*2*/
+#define BRI_SETTING_DEF		123 /*92*/
+#define BRI_SETTING_MAX		255
+
+#define PWM_MIN				7
+#define PWM_DEFAULT			90
 #define PWM_MAX				232
 
 unsigned char shrink_br = BRI_SETTING_MAX;
@@ -433,15 +443,18 @@ static unsigned char shooter_u_shrink_pwm(int val)
 	if (val <= 0) {
 		shrink_br = 0;
 	} else if (val > 0 && (val <= BRI_SETTING_MIN)) {
-		shrink_br = PWM_MIN+1 ; /* 1 and 2 */
+		shrink_br = PWM_MIN + 5/10 ; /* 1 and 2 */
 	} else if ((val > BRI_SETTING_MIN) && (val <= BRI_SETTING_DEF)) {
 		shrink_br = (val - BRI_SETTING_MIN) * (PWM_DEFAULT - PWM_MIN) /
-			(BRI_SETTING_DEF - BRI_SETTING_MIN) + PWM_MIN; /* from 3 to 90 (3-2)x(75-7)/(92-2)+7 1*68/90+7 => must be over 7.5  */
+			(BRI_SETTING_DEF - BRI_SETTING_MIN) + PWM_MIN; 
+			/* from 3 to 90 (3-2)x(75-7)/(92-2)+7 1*68/90+7 => must be over 7.5  */
 	} else if (val > BRI_SETTING_DEF && val <= BRI_SETTING_MAX) {
 		shrink_br = (val - BRI_SETTING_DEF) * (PWM_MAX - PWM_DEFAULT) /
-			(BRI_SETTING_MAX - BRI_SETTING_DEF) + PWM_DEFAULT; /* (254-92)x(232-75)/(255-92)+7  192*157/193+7   => 163  starts from 7.8 max at 163*/
+			(BRI_SETTING_MAX - BRI_SETTING_DEF) + PWM_DEFAULT; 
+			/* (254-92)x(232-75)/(255-92)+7  192*157/193+7   => 163  starts from 7.8 max at 163*/
 	} else if (val > BRI_SETTING_MAX)
-		shrink_br = PWM_MAX; /* we wont come in here */
+		shrink_br = PWM_MAX; 
+	/* we wont come in here */
 
 	if (atomic_read(&g_3D_mode) != BARRIER_OFF && shrink_br != 0)
 		shrink_br = 255;
