@@ -3,7 +3,7 @@ if [ ! -z "$1" ] ;then
 clear
 COMPILER=/home/anryl/GPL_toolchains/bin/arm-eabi-
 #. runhtc $COMPILER shooter_u_SOC_defconfig HTCOC $1
-#. runhtc $COMPILER shooter_u_S_defconfig HTC $1
-. runhtc $COMPILER shooter_u_OTG_defconfig OTG $1
+. runhtc $COMPILER shooter_u_S_defconfig HTC $1
+#. runhtc $COMPILER shooter_u_OTG_defconfig OTG $1
 #. runhtc $COMPILER shooter_u_OTGOC_defconfig OTGOC $1
 fi
