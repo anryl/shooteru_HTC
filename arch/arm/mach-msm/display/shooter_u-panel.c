@@ -420,6 +420,12 @@ static struct mipi_dsi_platform_data mipi_pdata = {
  #define BRI_SETTING_MIN		30
 #define BRI_SETTING_DEF		143
 #define BRI_SETTING_MAX		255
+0-30 8
+31-30 * 91-8 * / 143-30 + 8 = 1*83/110+8 = 16
+102-30 * 91-8 / 143-30 + 8 = 72*83/110+8 = 62 
+255-143 * 232-91 / 255 -143 + 8 = 112 * 141 / 112 +8 = 149
+
+
 
 #define PWM_MIN				8
 #define PWM_DEFAULT			91
@@ -427,13 +433,19 @@ static struct mipi_dsi_platform_data mipi_pdata = {
  
  */
 
-#define BRI_SETTING_MIN		10 /*2*/
-#define BRI_SETTING_DEF		123 /*92*/
+#define BRI_SETTING_MIN		29 /*2*/
+#define BRI_SETTING_DEF		162 /*92*/
 #define BRI_SETTING_MAX		255
+/*
+0-29 7.5
+30-29 * 91-8 * / 102-29 + 7 = 1*83/73+7 = 8.13
+102-29 * 80-7 / 162-29 + 7 = 73*73/133+7 = 47
+255-162 * 222-80 / 255 -162 + 7 = 153 * 142 / 153 +7 = 149
+ * */
 
 #define PWM_MIN				7
-#define PWM_DEFAULT			90
-#define PWM_MAX				232
+#define PWM_DEFAULT			80
+#define PWM_MAX				222
 
 unsigned char shrink_br = BRI_SETTING_MAX;
 unsigned char last_br_2d = BRI_SETTING_MAX;
@@ -448,12 +460,12 @@ static unsigned char shooter_u_shrink_pwm(int val)
 		shrink_br = (val - BRI_SETTING_MIN) * (PWM_DEFAULT - PWM_MIN) /
 			(BRI_SETTING_DEF - BRI_SETTING_MIN) + PWM_MIN; 
 			/* from 3 to 90 (3-2)x(75-7)/(92-2)+7 1*68/90+7 => must be over 7.5  */
-	} else if (val > BRI_SETTING_DEF && val <= BRI_SETTING_MAX) {
+	} else if (val > BRI_SETTING_DEF && val < BRI_SETTING_MAX) {
 		shrink_br = (val - BRI_SETTING_DEF) * (PWM_MAX - PWM_DEFAULT) /
 			(BRI_SETTING_MAX - BRI_SETTING_DEF) + PWM_DEFAULT; 
 			/* (254-92)x(232-75)/(255-92)+7  192*157/193+7   => 163  starts from 7.8 max at 163*/
-	} else if (val > BRI_SETTING_MAX)
-		shrink_br = PWM_MAX; 
+	} else if (val >= BRI_SETTING_MAX)
+		shrink_br = 148; 
 	/* we wont come in here */
 
 	if (atomic_read(&g_3D_mode) != BARRIER_OFF && shrink_br != 0)
