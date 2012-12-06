@@ -77,7 +77,14 @@ config IOSCHED_SIO
 
 config IOSCHED_VR
 	tristate "V(R) I/O scheduler"
-	default n
+	default y
+	---help---
+	  Requests are chosen according to SSTF with a penalty of rev_penalty
+	  for switching head direction.
+
+config IOSCHED_ZEN
+	tristate "ZEN I/O scheduler"
+	default y
 	---help---
 	  Requests are chosen according to SSTF with a penalty of rev_penalty
 	  for switching head direction.
@@ -120,6 +127,9 @@ choice
 
 	config DEFAULT_ROW
 		bool "ROW" if IOSCHED_ROW=y
+		
+	config DEFAULT_ZEN
+		bool "ZEN" if IOSCHED_ZEN=y
 
 endchoice
 
@@ -132,7 +142,8 @@ config DEFAULT_IOSCHED
 	default "sio" if DEFAULT_SIO
 	default "vr" if DEFAULT_VR
 	default "row" if DEFAULT_ROW
-
+	default "zen" if DEFAULT_ZEN
+	
 endmenu
 
 endif

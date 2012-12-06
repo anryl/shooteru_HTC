@@ -17,9 +17,9 @@
 /*
  * See Documentation/block/deadline-iosched.txt
  */
-static const int read_expire = HZ / 4;  /* max time before a read is submitted. */
-static const int write_expire = 5 * HZ; /* ditto for writes, these limits are SOFT! */
-static const int writes_starved = 4;    /* max times reads can starve a write */
+static const int read_expire = HZ;  /* max time before a read is submitted. */
+static const int write_expire = 6 * HZ; /* ditto for writes, these limits are SOFT! */
+static const int writes_starved = 1;    /* max times reads can starve a write */
 static const int fifo_batch = 1;       /* # of sequential requests treated as one
 				     by the above parameters. For throughput. */
 
@@ -77,6 +77,7 @@ static void
 deadline_add_rq_rb(struct deadline_data *dd, struct request *rq)
 {
 	struct rb_root *root = deadline_rb_root(dd, rq);
+
 	elv_rb_add(root, rq);
 }
 
@@ -448,7 +449,6 @@ static struct elevator_type iosched_deadline = {
 static int __init deadline_init(void)
 {
 	elv_register(&iosched_deadline);
-
 	return 0;
 }
 
@@ -457,7 +457,11 @@ static void __exit deadline_exit(void)
 	elv_unregister(&iosched_deadline);
 }
 
+#ifdef CONFIG_FAST_RESUME
+beforeresume_initcall(deadline_init);
+#else
 module_init(deadline_init);
+#endif
 module_exit(deadline_exit);
 
 MODULE_AUTHOR("Jens Axboe");

@@ -23,13 +23,13 @@
 enum { ASYNC, SYNC };
 
 /* Tunables */
-static const int sync_read_expire  = HZ / 2;	/* max time before a sync read is submitted. */
-static const int sync_write_expire = 2 * HZ;	/* max time before a sync write is submitted. */
+static const int sync_read_expire  = HZ;	/* max time before a sync read is submitted. */
+static const int sync_write_expire = 6 * HZ;	/* max time before a sync write is submitted. */
 
 static const int async_read_expire  =  4 * HZ;	/* ditto for async, these limits are SOFT! */
 static const int async_write_expire = 16 * HZ;	/* ditto for async, these limits are SOFT! */
 
-static const int writes_starved = 4;		/* max times reads can starve a write */
+static const int writes_starved = 2;		/* max times reads can starve a write */
 static const int fifo_batch     = 1;		/* # of sequential requests treated as one
 						   by the above parameters. For throughput. */
 
@@ -380,8 +380,7 @@ static int __init sio_init(void)
 {
 	/* Register elevator */
 	elv_register(&iosched_sio);
-
-	return 0;
+	return  0;
 }
 
 static void __exit sio_exit(void)
@@ -397,4 +396,3 @@ MODULE_AUTHOR("Miguel Boton");
 MODULE_LICENSE("GPL");
 MODULE_DESCRIPTION("Simple IO scheduler");
 MODULE_VERSION("0.2");
-
