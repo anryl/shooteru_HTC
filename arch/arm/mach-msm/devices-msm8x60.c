@@ -981,7 +981,7 @@ static struct kgsl_device_platform_data kgsl_3d0_pdata = {
 #if defined(CONFIG_FORCE_OC)			  
 			.gpu_freq = 320000000,
 #else
-			.gpu_freq = 300000000,
+			.gpu_freq = 320000000,
 #endif
 			.bus_freq = 4,
 			.io_fraction = 0,
@@ -1053,7 +1053,7 @@ static struct kgsl_device_platform_data kgsl_2d0_pdata = {
 			.gpu_freq = 228571000,
 			.bus_freq = 2,
 		},
-#endif		
+		
 		{
 			.gpu_freq = 200000000,
 			.bus_freq = 1,
@@ -1062,6 +1062,18 @@ static struct kgsl_device_platform_data kgsl_2d0_pdata = {
 			.gpu_freq = 200000000,
 			.bus_freq = 0,
 		},
+#else
+		
+		{
+			.gpu_freq = 266667000,
+			.bus_freq = 1,
+		},
+		{
+			.gpu_freq = 266667000,
+			.bus_freq = 0,
+		},
+#endif	
+	  
 	},
 #if defined(CONFIG_FORCE_OC)
 	.init_level = 1,
@@ -1115,7 +1127,7 @@ static struct kgsl_device_platform_data kgsl_2d1_pdata = {
 			.gpu_freq = 228571000,
 			.bus_freq = 2,
 		},
-#endif		
+		
 		{
 			.gpu_freq = 200000000,
 			.bus_freq = 1,
@@ -1124,6 +1136,17 @@ static struct kgsl_device_platform_data kgsl_2d1_pdata = {
 			.gpu_freq = 200000000,
 			.bus_freq = 0,
 		},
+#else
+		
+		{
+			.gpu_freq = 266667000,
+			.bus_freq = 1,
+		},
+		{
+			.gpu_freq = 266667000,
+			.bus_freq = 0,
+		},
+#endif	
 	},
 #if defined(CONFIG_FORCE_OC)
 	.init_level = 1,
