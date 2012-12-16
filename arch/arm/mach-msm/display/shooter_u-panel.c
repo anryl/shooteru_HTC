@@ -455,10 +455,10 @@ static unsigned char shooter_u_shrink_pwm(int val)
 	if (val <= 0) {
 		shrink_br = 0;
 	} else if (val > 0 && (val <= BRI_SETTING_MIN)) {
-		shrink_br = PWM_MIN + 5/10 ; /* 1 and 2 */
+		shrink_br = PWM_MIN + 6/10 ; /* 1 and 2 */
 	} else if ((val > BRI_SETTING_MIN) && (val <= BRI_SETTING_DEF)) {
 		shrink_br = (val - BRI_SETTING_MIN) * (PWM_DEFAULT - PWM_MIN) /
-			(BRI_SETTING_DEF - BRI_SETTING_MIN) + PWM_MIN; 
+			(BRI_SETTING_DEF - BRI_SETTING_MIN) + PWM_MIN ; 
 			/* from 3 to 90 (3-2)x(75-7)/(92-2)+7 1*68/90+7 => must be over 7.5  */
 	} else if (val > BRI_SETTING_DEF && val < BRI_SETTING_MAX) {
 		shrink_br = (val - BRI_SETTING_DEF) * (PWM_MAX - PWM_DEFAULT) /
