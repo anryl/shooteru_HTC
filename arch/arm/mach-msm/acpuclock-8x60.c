@@ -230,7 +230,6 @@ static struct clkctl_l2_speed l2_freq_tbl_v2[] = {
 	[17] = {1296000,  1, 0x18, 1200000, 1225000, 3},
 	[18] = {1350000,  1, 0x19, 1200000, 1225000, 3},
 	[19] = {1404000,  1, 0x1A, 1200000, 1250000, 3},
-	[20] = {1512000,  1, 0x1C, 1225000, 1275000, 4},
 #endif
 };
 
@@ -273,8 +272,7 @@ static struct clkctl_acpu_speed acpu_freq_tbl_fast[] = {
   { {1, 1}, 1350000,  ACPU_SCPLL, 0, 0, 1, 0x19, L2(18), 1100000, 0x03006000},
   { {1, 1}, 1404000,  ACPU_SCPLL, 0, 0, 1, 0x1A, L2(19), 1100000, 0x03006000},
   { {1, 1}, 1458000,  ACPU_SCPLL, 0, 0, 1, 0x1B, L2(19), 1100000, 0x03006000},
-  { {1, 1}, 1512000,  ACPU_SCPLL, 0, 0, 1, 0x1C, L2(20), 1125000, 0x03006000},
-  { {1, 1}, 1566000,  ACPU_SCPLL, 0, 0, 1, 0x1D, L2(20), 1125000, 0x03006000},
+  { {1, 1}, 1512000,  ACPU_SCPLL, 0, 0, 1, 0x1C, L2(19), 1125000, 0x03006000},
 #endif
   { {0, 0}, 0 },
 };
@@ -902,7 +900,7 @@ static __init struct clkctl_acpu_speed *select_freq_plan(void)
 #if defined(CONFIG_FORCE_OC)	
 		max_khz = 1674000;
 #else
-		max_khz = 1566000;
+		max_khz = 1512000;
 #endif
 		acpu_freq_tbl = acpu_freq_tbl_fast;
 	
@@ -972,7 +970,7 @@ static int __init acpuclk_8x60_init(struct acpuclk_soc_data *soc_data)
 #if defined(CONFIG_FORCE_OC)
 	acpuclk_8x60_set_rate(cpu, 1512000, SETRATE_INIT);
 #else
-	acpuclk_8x60_set_rate(cpu, 1566000, SETRATE_INIT);
+	acpuclk_8x60_set_rate(cpu, 1188000, SETRATE_INIT);
 #endif
 
 	acpuclk_register(&acpuclk_8x60_data);
