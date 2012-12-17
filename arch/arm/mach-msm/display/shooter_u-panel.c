@@ -437,7 +437,7 @@ static struct mipi_dsi_platform_data mipi_pdata = {
 #define BRI_SETTING_DEF		162 /*92*/
 #define BRI_SETTING_MAX		255
 /*
-0-29 7.5
+0-29 7+8/10 = 7.8
 30-29 * 91-8 * / 102-29 + 7 = 1*83/73+7 = 8.13
 102-29 * 80-7 / 162-29 + 7 = 73*73/133+7 = 47
 255-162 * 222-80 / 255 -162 + 7 = 153 * 142 / 153 +7 = 149
@@ -455,7 +455,7 @@ static unsigned char shooter_u_shrink_pwm(int val)
 	if (val <= 0) {
 		shrink_br = 0;
 	} else if (val > 0 && (val <= BRI_SETTING_MIN)) {
-		shrink_br = PWM_MIN + 6/10 ; /* 1 and 2 */
+		shrink_br = PWM_MIN + 8/10 ; /* 1 and 2 */
 	} else if ((val > BRI_SETTING_MIN) && (val <= BRI_SETTING_DEF)) {
 		shrink_br = (val - BRI_SETTING_MIN) * (PWM_DEFAULT - PWM_MIN) /
 			(BRI_SETTING_DEF - BRI_SETTING_MIN) + PWM_MIN ; 
