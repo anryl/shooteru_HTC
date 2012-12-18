@@ -36,11 +36,9 @@ struct msm_rotator_data_info {
 	int session_id;
 	struct msmfb_data src;
 	struct msmfb_data dst;
-#ifndef CONFIG_MSM_ROTATOR_LEGACY
 	unsigned int version_key;
 	struct msmfb_data src_chroma;
 	struct msmfb_data dst_chroma;
-#endif
 };
 
 struct msm_rot_clocks {

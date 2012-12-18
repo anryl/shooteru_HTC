@@ -879,7 +879,52 @@ static int __cpuinit acpuclock_cpu_callback(struct notifier_block *nfb,
 static struct notifier_block __cpuinitdata acpuclock_cpu_notifier = {
 	.notifier_call = acpuclock_cpu_callback,
 };
+#ifdef CONFIG_MSM_MPDEC
+uint32_t acpu_check_khz_value(unsigned long khz)
+{
+	struct clkctl_acpu_speed *f;
 
+	if (khz > 1944000)
+	  #if defined(CONFIG_FORCE_OC)	
+		return 1674000;
+	  #else
+		return 1512000;
+	  #endif
+
+
+	if (khz < 192)
+		return 192000;
+
+	for (f = acpu_freq_tbl_fast; f->acpuclk_khz != 0; f++) {
+		if (khz < 192000) {
+			if (f->acpuclk_khz == (khz*1000))
+				return f->acpuclk_khz;
+			if ((khz*1000) > f->acpuclk_khz) {
+				f++;
+				if ((khz*1000) < f->acpuclk_khz) {
+					f--;
+					return f->acpuclk_khz;
+				}
+				f--;
+			}
+		}
+		if (f->acpuclk_khz == khz) {
+			return 1;
+		}
+		if (khz > f->acpuclk_khz) {
+			f++;
+			if (khz < f->acpuclk_khz) {
+				f--;
+				return f->acpuclk_khz;
+			}
+			f--;
+		}
+	}
+
+	return 0;
+}
+EXPORT_SYMBOL(acpu_check_khz_value);
+#endif
 static __init struct clkctl_acpu_speed *select_freq_plan(void)
 {
 	uint32_t pte_efuse, speed_bin, pvs, max_khz;
