@@ -903,7 +903,7 @@ endif
 
 choice
   prompt "Optimization level (-Os, -O2, -O3)"
-  default CC_OPTIMIZE_DEFAULT
+  default CC_OPTIMIZE_FAST
 
 config CC_OPTIMIZE_FOR_SIZE
 	bool "Use -Os"
@@ -922,6 +922,13 @@ config CC_OPTIMIZE_ALOT
 	help
 	  Enabling this option will pass "-O3" instead of "-Os" or "-O2" to gcc
 	  resulting in a large sized kernel, fully optimized.
+
+config CC_OPTIMIZE_FAST
+	bool "Use -Ofast"
+	help
+	  Enabling this option will pass "-Ofast" instead of "-Os" or "-O2" to gcc
+	  resulting in a large sized kernel, fully optimized.
+	  
 endchoice
 
 config SYSCTL
