@@ -1,6 +1,8 @@
 #!/bin/sh
 if [ ! -z "$1" ] ;then
 clear
+find -iname '*.ko' -exec rm {} /home/anryl/build/$3/system/lib/modules/ \;
+
 COMPILER=/home/anryl/GPL_toolchains/bin/arm-eabi-
 #. runhtc $COMPILER shooter_u_SOC_defconfig HTCOC $1
 . runhtc $COMPILER shooter_u_S_defconfig HTC $1
