@@ -17,7 +17,6 @@
 
 #ifndef __MSM_TSENS_H
 #define __MSM_TSENS_H
-
 enum platform_type {
 	MSM_8660 = 0,
 	MSM_8960,
@@ -40,4 +39,3 @@ int32_t tsens_get_temp(struct tsens_device *dev, unsigned long *temp);
 int msm_tsens_early_init(struct tsens_platform_data *pdata);
 
 #endif /*MSM_TSENS_H */
-
