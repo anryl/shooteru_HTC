@@ -5,8 +5,8 @@ find -iname '*.ko' -exec rm {} /home/anryl/build/$3/system/lib/modules/ \;
 
 COMPILER=/home/anryl/GPL_toolchains/bin/arm-eabi-
 #COMPILER=/home/anryl/Downloads/android-toolchain-eabi/bin/arm-eabi-
-. runhtc $COMPILER shooter_u_SOC_defconfig HTCOC $1
-. runhtc $COMPILER shooter_u_S_defconfig HTC $1
+. runhtc $COMPILER shooter_u_SBCM_defconfig HTCBCM $1
+. runhtc $COMPILER shooter_u_SDHD_defconfig HTCDHD $1
 #. runhtc $COMPILER shooter_u_OTG_defconfig OTG $1
 #. runhtc $COMPILER shooter_u_OTGOC_defconfig OTGOC $1
 fi

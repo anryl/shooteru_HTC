@@ -40,7 +40,7 @@
 void q6asm_amrnb_in_cb(uint32_t opcode, uint32_t token,
 		uint32_t *payload, void *priv)
 {
-	struct q6audio_in * audio = (struct q6audio_in *)priv;
+	struct q6audio_in *audio = (struct q6audio_in *)priv;
 	unsigned long flags;
 
 	pr_debug("%s:session id %d: opcode - %d\n", __func__,
