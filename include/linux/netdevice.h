@@ -1529,7 +1529,7 @@ struct napi_gro_cb {
 
 	/* Free the skb? */
 	int free;
-};
+} __attribute__((__may_alias__));
 
 #define NAPI_GRO_CB(skb) ((struct napi_gro_cb *)(skb)->cb)
 

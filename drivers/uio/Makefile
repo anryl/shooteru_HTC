@@ -1,3 +1,4 @@
+EXTRA_CFLAGS += -fno-strict-aliasing
 obj-$(CONFIG_UIO)	+= uio.o
 obj-$(CONFIG_UIO_CIF)	+= uio_cif.o
 obj-$(CONFIG_UIO_PDRV)	+= uio_pdrv.o

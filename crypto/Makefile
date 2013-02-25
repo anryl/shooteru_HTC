@@ -1,7 +1,8 @@
 #
 # Cryptographic API
 #
-
+#EXTRA_CFLAGS += -fno-strict-aliasing
+#CFLAGS_scatterwalk.o += -fno-strict-aliasing
 obj-$(CONFIG_CRYPTO) += crypto.o
 crypto-y := api.o cipher.o compress.o
 

@@ -1,10 +1,10 @@
 ifdef CONFIG_MSM_VIDC_720P
-EXTRA_CFLAGS += -Idrivers/video/msm/vidc/720p/ddl
+EXTRA_CFLAGS += -Idrivers/video/msm/vidc/720p/ddl 
 EXTRA_CFLAGS += -Idrivers/video/msm/vidc/720p/resource_tracker
 endif
 
 ifdef CONFIG_MSM_VIDC_1080P
-EXTRA_CFLAGS  += -Idrivers/video/msm/vidc/1080p/ddl
+EXTRA_CFLAGS  += -Idrivers/video/msm/vidc/1080p/ddl -fno-strict-aliasing
 EXTRA_CFLAGS  += -Idrivers/video/msm/vidc/1080p/resource_tracker
 endif
 

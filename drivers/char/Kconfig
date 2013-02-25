@@ -685,6 +685,10 @@ config CSDIO_DEVICE_ID
 	help
 	  Enter device id for targeted sdio device, this may be overwritten by
 	  module parameters.
+
+config FRANDOM
+	tristate
+	default y
 .
 endmenu
 

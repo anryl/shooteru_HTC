@@ -1,7 +1,7 @@
 #
 # Makefile for the netfilter modules on top of IPv4.
 #
-
+EXTRA_CFLAGS += -fno-strict-aliasing
 # objects for l3 independent conntrack
 nf_conntrack_ipv4-y	:=  nf_conntrack_l3proto_ipv4.o nf_conntrack_proto_icmp.o
 ifeq ($(CONFIG_NF_CONNTRACK_PROC_COMPAT),y)

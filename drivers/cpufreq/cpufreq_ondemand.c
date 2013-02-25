@@ -10,31 +10,31 @@
  * published by the Free Software Foundation.
  */
 
-#include <linuxx/kernel.h>
-#include <linuxx/module.h>
-#include <linuxx/init.h>
-#include <linuxx/cpufreq.h>
-#include <linuxx/cpu.h>
-#include <linuxx/jiffies.h>
-#include <linuxx/kernel_stat.h>
-#include <linuxx/mutex.h>
-#include <linuxx/hrtimer.h>
-#include <linuxx/tick.h>
-#include <linuxx/ktime.h>
-#include <linuxx/sched.h>
-#include <linuxx/input.h>
-#include <linuxx/workqueue.h>
-#include <linuxx/slab.h>
-#include <linuxx/syscalls.h>
-#include <linuxx/highuid.h>
-#include <linuxx/cpu_debug.h>
-#include <linuxx/kthread.h>
+#include <linux/kernel.h>
+#include <linux/module.h>
+#include <linux/init.h>
+#include <linux/cpufreq.h>
+#include <linux/cpu.h>
+#include <linux/jiffies.h>
+#include <linux/kernel_stat.h>
+#include <linux/mutex.h>
+#include <linux/hrtimer.h>
+#include <linux/tick.h>
+#include <linux/ktime.h>
+#include <linux/sched.h>
+#include <linux/input.h>
+#include <linux/workqueue.h>
+#include <linux/slab.h>
+#include <linux/syscalls.h>
+#include <linux/highuid.h>
+#include <linux/cpu_debug.h>
+#include <linux/kthread.h>
 
 /* Google systrace just supports Interactive governor (option -l)
  * Just backport Interactive trace points for Ondemand governor use
  */
 #define CREATE_TRACE_POINTS
-#include <trace/events/cpufreq_ondemand.h>
+#include <trace/events/cpufreq_interactive.h>
 
 /*
  * dbs is used in this file as a shortform for demandbased switching
@@ -694,6 +694,14 @@ static void dbs_freq_increase(struct cpufreq_policy *p, unsigned int load, unsig
 
     trace_cpufreq_interactive_up (p->cpu, freq, p->cur);
 }
+
+#ifdef CONFIG_CPU_FREQ_GOV_ONDEMAND_2_PHASE
+int set_two_phase_freq(int cpufreq)
+{
+	dbs_tuners_ins.two_phase_freq = cpufreq;
+	return 0;
+}
+#endif
 
 static void dbs_check_cpu(struct cpu_dbs_info_s *this_dbs_info)
 {

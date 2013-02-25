@@ -1,3 +1,5 @@
+#CFLAGS_htc_port_list.o += -fno-strict-aliasing
+CFLAGS_rpm_log.o += -fno-strict-aliasing
 obj-y += io.o dma.o memory.o timer.o
 obj-y += clock.o clock-voter.o clock-dummy.o
 obj-y += subsystem_map.o

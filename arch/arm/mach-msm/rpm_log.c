@@ -50,7 +50,7 @@ struct msm_rpm_log_buffer {
 	u32 max_len;
 	u32 read_idx;
 	struct msm_rpm_log_platform_data *pdata;
-};
+} __attribute__((__may_alias__));
 
 /******************************************************************************
  * Internal functions

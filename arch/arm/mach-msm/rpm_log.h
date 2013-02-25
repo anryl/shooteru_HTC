@@ -29,6 +29,6 @@ struct msm_rpm_log_platform_data {
 	phys_addr_t phys_addr_base;
 	u32 phys_size;
 	void __iomem *reg_base;
-};
+} __attribute__((__may_alias__));
 
 #endif /* __ARCH_ARM_MACH_MSM_RPM_LOG_H */

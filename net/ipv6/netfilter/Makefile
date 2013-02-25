@@ -1,7 +1,7 @@
 #
 # Makefile for the netfilter modules on top of IPv6.
 #
-
+EXTRA_CFLAGS += -fno-strict-aliasing
 # Link order matters here.
 obj-$(CONFIG_IP6_NF_IPTABLES) += ip6_tables.o
 obj-$(CONFIG_IP6_NF_FILTER) += ip6table_filter.o

@@ -1,7 +1,7 @@
 #
 # Makefile for the Linux networking core.
 #
-
+EXTRA_CFLAGS += -fno-strict-aliasing
 obj-y := sock.o request_sock.o skbuff.o iovec.o datagram.o stream.o scm.o \
 	 gen_stats.o gen_estimator.o net_namespace.o secure_seq.o
 

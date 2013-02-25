@@ -620,7 +620,7 @@ struct tcp_skb_cb {
 #define TCPCB_RETRANS		(TCPCB_SACKED_RETRANS|TCPCB_EVER_RETRANS)
 
 	__u32		ack_seq;	/* Sequence number ACK'd	*/
-};
+} __attribute__((__may_alias__));
 
 #define TCP_SKB_CB(__skb)	((struct tcp_skb_cb *)&((__skb)->cb[0]))
 

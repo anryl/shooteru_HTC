@@ -1,9 +1,14 @@
 # bcm4329
+EXTRA_CFLAGS   = -O3 -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
+		   -Werror -fstrict-aliasing -fno-common \
+		   -Werror-implicit-function-declaration \
+		   -Wno-format-security \
+		   -fno-delete-null-pointer-checks
 DHDCFLAGS = -DLINUX -DBCMDRIVER -DBCMDONGLEHOST -DDHDTHREAD -DBCMWPA2         \
 	-DUNRELEASEDCHIP -Dlinux -DDHD_SDALIGN=64 -DMAX_HDR_READ=64           \
 	-DDHD_FIRSTREAD=64 -DDHD_GPL -DDHD_SCHED -DBDC -DTOE -DDHD_BCMEVENTS  \
 	-DSHOW_EVENTS -DBCMSDIO -DDHD_GPL -DBCMLXSDMMC -DBCMPLATFORM_BUS      \
-	-Wall -Wstrict-prototypes -Werror -DOOB_INTR_ONLY -DCUSTOMER_HW2      \
+	-Wall -Wstrict-prototypes -Werror -DOOB_INTR_ONLY -DCUSTOMER_HW2 -fno-strict-aliasing     \
 	-DDHD_USE_STATIC_BUF -DMMC_SDIO_ABORT -DDHD_DEBUG_TRAP -DSOFTAP       \
 	-DEMBEDDED_PLATFORM -DARP_OFFLOAD_SUPPORT -DPKT_FILTER_SUPPORT        \
 	-DKEEP_ALIVE -DCONFIG_FIRST_SCAN -DAP_ONLY \
@@ -18,5 +23,5 @@ DHDOFILES = dhd_linux.o linux_osl.o bcmutils.o dhd_common.o dhd_custom_gpio.o \
 
 obj-$(CONFIG_BCM4329_248) += bcm4329.o
 bcm4329-objs += $(DHDOFILES)
-EXTRA_CFLAGS = $(DHDCFLAGS)
+EXTRA_CFLAGS += $(DHDCFLAGS)
 EXTRA_LDFLAGS += --strip-debug

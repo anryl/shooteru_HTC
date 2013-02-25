@@ -1,6 +1,13 @@
 #
 # Makefile for some libs needed in the kernel.
 #
+#EXTRA_CFLAGS = -fno-strict-aliasing
+CFLAGS_libcrc32c.o += -fno-strict-aliasing
+CFLAGS_nlattr.o += -fno-strict-aliasing
+CFLAGS_klist.o += -fno-strict-aliasing
+CFLAGS_kobject_uevent.o += -fno-strict-aliasing
+CFLAGS_radix-tree.o += -fno-strict-aliasing
+CFLAGS_vsprintf.o += -fno-strict-aliasing
 
 ifdef CONFIG_FUNCTION_TRACER
 ORIG_CFLAGS := $(KBUILD_CFLAGS)
@@ -13,7 +20,7 @@ lib-y := ctype.o string.o vsprintf.o cmdline.o \
 	 sha1.o md5.o irq_regs.o reciprocal_div.o argv_split.o \
 	 proportions.o prio_heap.o ratelimit.o show_mem.o \
 	 is_single_threaded.o plist.o decompress.o find_next_bit.o memory_alloc.o \
-  		memcopy.o
+	 memcopy.o
 
 lib-$(CONFIG_MMU) += ioremap.o
 lib-$(CONFIG_SMP) += cpumask.o
@@ -112,6 +119,9 @@ obj-$(CONFIG_ATOMIC64_SELFTEST) += atomic64_test.o
 obj-$(CONFIG_AVERAGE) += average.o
 
 obj-$(CONFIG_CPU_RMAP) += cpu_rmap.o
+
+obj-$(CONFIG_GENERIC_STRNCPY_FROM_USER) += strncpy_from_user.o
+obj-$(CONFIG_GENERIC_STRNLEN_USER) += strnlen_user.o
 
 hostprogs-y	:= gen_crc32table
 clean-files	:= crc32table.h

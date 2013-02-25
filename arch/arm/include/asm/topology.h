@@ -28,7 +28,7 @@ void init_cpu_topology(void);
 void store_cpu_topology(unsigned int cpuid);
 const struct cpumask *cpu_coregroup_mask(int cpu);
 
-
+void set_power_scale(unsigned int cpu, unsigned int power);
 int topology_register_notifier(struct notifier_block *nb);
 int topology_unregister_notifier(struct notifier_block *nb);
 

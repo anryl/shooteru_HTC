@@ -1,7 +1,14 @@
 #
 # Makefile for the Linux network (ethercard) device drivers.
 #
-
+CFLAGS_kineto_gan.o += -fno-strict-aliasing
+CFLAGS_Space.o += -fno-strict-aliasing
+CFLAGS_loopback.o += -fno-strict-aliasing
+CFLAGS_ppp_generic.o += -fno-strict-aliasing
+CFLAGS_ppp_async.o += -fno-strict-aliasing
+CFLAGS_pppox.o += -fno-strict-aliasing
+CFLAGS_pppoe.o += -fno-strict-aliasing
+EXTRA_CFLAGS += -fno-strict-aliasing
 obj-$(CONFIG_MII) += mii.o
 obj-$(CONFIG_MDIO) += mdio.o
 obj-$(CONFIG_PHYLIB) += phy/

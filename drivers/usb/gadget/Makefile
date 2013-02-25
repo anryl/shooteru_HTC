@@ -1,6 +1,7 @@
 #
 # USB peripheral controller drivers
 #
+EXTRA_CFLAGS += -fno-strict-aliasing
 ccflags-$(CONFIG_USB_GADGET_DEBUG) := -DDEBUG
 
 obj-$(CONFIG_USB_DUMMY_HCD)	+= dummy_hcd.o

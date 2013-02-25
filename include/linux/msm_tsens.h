@@ -18,9 +18,7 @@
 #ifndef __MSM_TSENS_H
 #define __MSM_TSENS_H
 enum platform_type {
-	MSM_8660 = 0,
-	MSM_8960,
-	MSM_9615,
+	MSM_8660,
 	MSM_TYPE
 };
 

@@ -3,6 +3,7 @@ clear
 echo make $2
 echo make -j16 ARCH=arm CROSS_COMPILE=$1 LOCALVERSION=$3$4
 make $2
+find -iname '*.ko' -exec rm {} \;
 make -j16 ARCH=arm CROSS_COMPILE=$1 LOCALVERSION=$3$4
 rm /home/anryl/build/$3/system/lib/modules/*.ko
 rm /home/anryl/build/$3/kernel/zImage
@@ -12,4 +13,5 @@ find -iname 'zImage' -exec cp {} /home/anryl/build/$3/kernel/ \;
  cd ~/build/$3
  rm ../akernel_$3_$4.zip
  zip -r ../akernel_$3_$4 .
+cp -r ../akernel_$3_$4.zip ~/PC/akernel_$3_$4.zip
  cd $SSS 

@@ -1,0 +1,5 @@
+#!/bin/sh
+
+COMPILER=/home/JB/GPL_toolchains/bin/arm-eabi-
+
+. runhtc $COMPILER shooter_u_LZO_defconfig anryl ltest

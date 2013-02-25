@@ -4,7 +4,8 @@
 # 14 Sep 2000, Christoph Hellwig <hch@infradead.org>
 # Rewritten to use lists instead of if-statements.
 # 
-
+CFLAGS_exec.o += -fno-strict-aliasing
+CFLAGS_binfmt_elf.o += -fno-strict-aliasing
 obj-y :=	open.o read_write.o file_table.o super.o \
 		char_dev.o stat.o exec.o pipe.o namei.o fcntl.o \
 		ioctl.o readdir.o select.o fifo.o dcache.o inode.o \

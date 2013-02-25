@@ -1,6 +1,6 @@
 VERSION = 3
 PATCHLEVEL = 0
-SUBLEVEL = 60
+SUBLEVEL = 65
 EXTRAVERSION =
 NAME = Sneaky Weasel
 
@@ -10,10 +10,11 @@ NAME = Sneaky Weasel
 # Comments in this file are targeted only to the developer, do not
 # expect to learn how to build the kernel reading this file.
 
-CKVERSION = -ck1
-CKNAME = BFS Powered
+# CKVERSION = -ck1
+# CKNAME = BFS Powered
 LOCALVERSION ?=
-EXTRAVERSION := $(EXTRAVERSION)$(CKVERSION)
+EXTRAVERSION := $(EXTRAVERSION)
+##$(CKVERSION)
 
 # Do not:
 # o  use make's built-in rules and variables
@@ -377,11 +378,24 @@ LINUXINCLUDE    := -I$(srctree)/arch/$(hdr-arch)/include \
 
 KBUILD_CPPFLAGS := -D__KERNEL__
 
-KBUILD_CFLAGS   := -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
-		   -fno-strict-aliasing -fno-common \
-		   -Werror-implicit-function-declaration \
-		   -Wno-format-security \
-		   -fno-delete-null-pointer-checks
+#KBUILD_CFLAGS   := -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
+#		   -Werror -fstrict-aliasing -fno-common \
+#		   -Werror-implicit-function-declaration \
+#		   -Wno-format-security \
+#		   -fno-delete-null-pointer-checks
+#		   
+KBUILD_CFLAGS   :=		                           -Werror \
+                        -fomit-frame-pointer \
+                        -fstrict-aliasing \
+                        -Wstrict-aliasing=2 \
+                        -Werror=strict-aliasing \
+                        -floop-interchange \
+                        -floop-strip-mine \
+                        -floop-block \
+                        -ffast-math 
+		   
+# KBUILD_CFLAGS   :=		   
+		   
 KBUILD_AFLAGS_KERNEL :=
 KBUILD_CFLAGS_KERNEL := -fgcse-lm -fgcse-sm -fsched-spec-load -fforce-addr -ffast-math -fsingle-precision-constant -mtune=cortex-a8 -march=armv7-a -mfpu=neon -ftree-vectorize -funswitch-loops
 KBUILD_AFLAGS   := -D__ASSEMBLY__
@@ -581,7 +595,8 @@ ifdef CONFIG_CC_OPTIMIZE_ALOT
 KBUILD_CFLAGS	+= -O3
 endif
 ifdef CONFIG_CC_OPTIMIZE_FAST
-KBUILD_CFLAGS	+= -Ofast
+KBUILD_CFLAGS	+= -O3
+#-Ofast
 endif
 
 

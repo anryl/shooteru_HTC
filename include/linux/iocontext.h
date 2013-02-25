@@ -1,6 +1,7 @@
 #ifndef IOCONTEXT_H
 #define IOCONTEXT_H
 
+#include <linux/bitmap.h>
 #include <linux/radix-tree.h>
 #include <linux/rcupdate.h>
 

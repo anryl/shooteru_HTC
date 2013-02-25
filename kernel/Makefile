@@ -1,7 +1,9 @@
 #
 # Makefile for the linux kernel.
 #
-CFLAGS_workqueue.o += -O2
+CFLAGS_workqueue.o += -O2 -fno-strict-aliasing
+CFLAGS_sysctl.o += -fno-strict-aliasing
+CFLAGS_sysctl_binary.o += -fno-strict-aliasing
 obj-y     = sched.o fork.o exec_domain.o panic.o printk.o \
 	    cpu.o exit.o itimer.o time.o softirq.o resource.o \
 	    sysctl.o sysctl_binary.o capability.o ptrace.o timer.o user.o \

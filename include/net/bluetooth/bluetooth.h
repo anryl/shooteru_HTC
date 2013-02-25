@@ -203,7 +203,7 @@ struct bt_skb_cb {
 	__u8 force_active;
 	unsigned short channel;
 	struct bt_l2cap_control control;
-};
+} __attribute__((__may_alias__));
 #define bt_cb(skb) ((struct bt_skb_cb *)((skb)->cb))
 
 static inline struct sk_buff *bt_skb_alloc(unsigned int len, gfp_t how)

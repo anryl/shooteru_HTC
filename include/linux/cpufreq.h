@@ -22,7 +22,7 @@
 #include <linux/cpumask.h>
 #include <asm/div64.h>
 
-#define CPUFREQ_NAME_LEN 16
+#define CPUFREQ_NAME_LEN 32
 
 #ifdef CONFIG_MSM_MPDEC
 extern uint32_t acpu_check_khz_value(unsigned long khz);
@@ -369,6 +369,9 @@ extern struct cpufreq_governor cpufreq_gov_smartassv2;
 #elif defined(CONFIG_CPU_FREQ_DEFAULT_GOV_INTERACTIVE)
 extern struct cpufreq_governor cpufreq_gov_interactive;
 #define CPUFREQ_DEFAULT_GOVERNOR	(&cpufreq_gov_interactive)
+#elif defined(CONFIG_CPU_FREQ_DEFAULT_GOV_DYNAMIC_INTERACTIVE)
+extern struct cpufreq_governor cpufreq_gov_dynamic_interactive;
+#define CPUFREQ_DEFAULT_GOVERNOR  (&cpufreq_gov_dynamic_interactive)
 #elif defined(CONFIG_CPU_FREQ_DEFAULT_GOV_LAGFREE)
 extern struct cpufreq_governor cpufreq_gov_lagfree;
 #define CPUFREQ_DEFAULT_GOVERNOR (&cpufreq_gov_lagfree)
