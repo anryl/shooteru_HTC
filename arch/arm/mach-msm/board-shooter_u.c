@@ -2991,14 +2991,14 @@ static struct platform_device *early_devices[] __initdata = {
 	&flashlight_device,
 #endif
 };
-#ifdef CONFIG_THERMAL_TSENS8x60
+
 static struct tsens_platform_data pyr_tsens_pdata = {
                 .tsens_factor       = 1000,
                 .hw_type                = MSM_8660,
                 .tsens_num_sensor       = 6,
                 .slope                  = 702,
 };
-#endif
+
 #ifdef CONFIG_SENSORS_MSM_ADC
 static struct adc_access_fn xoadc_fn = {
 	pm8058_xoadc_select_chan_and_start_conv,
@@ -6439,14 +6439,14 @@ static void __init msm8x60_init(struct msm_board_data *board_data)
 
 	raw_speed_bin = readl(QFPROM_SPEED_BIN_ADDR);
 	speed_bin = raw_speed_bin & 0xF;
-#ifdef CONFIG_THERMAL_TSENS8x60	
+	
 	msm_tsens_early_init(&pyr_tsens_pdata);
 	
 	/*
 	 * Initialize RPM first as other drivers and devices may need
 	 * it for their initialization.
 	 */
-#endif
+
 #ifdef CONFIG_MSM_RPM
 	BUG_ON(msm_rpm_init(&msm_rpm_data));
 #endif

@@ -51,6 +51,9 @@
 #define MPIDR_LEVEL2_MASK 0xFF
 #define MPIDR_LEVEL2_SHIFT 16
 
+/*
+ * cpu topology table
+ */
 struct cputopo_arm cpu_topology[NR_CPUS];
 
 
@@ -180,7 +183,8 @@ static void power_cpu_topology_mask_CA9(unsigned int cpuid)
 {
 	struct cputopo_arm *cpuid_topo = &cpu_topology[cpuid];
 	unsigned int cpu;
-
+	
+	/* init core mask and power*/
 	for_each_possible_cpu(cpu) {
 		struct cputopo_arm *cpu_topo = &cpu_topology[cpu];
 
@@ -357,6 +361,7 @@ void init_cpu_topology(void)
 		cpumask_clear(&cpu_topo->thread_sibling);
 
 		per_cpu(cpu_scale, cpu) = SCHED_POWER_SCALE;
+		//set_power_scale(cpu, SCHED_POWER_SCALE);
 	}
 	smp_wmb();
 }
