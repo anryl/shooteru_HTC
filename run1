@@ -2,4 +2,4 @@
 
 COMPILER=/home/JB/GPL_toolchains/bin/arm-eabi-
 
-. runhtc $COMPILER shooter_u_LZO_defconfig anryl ltest
+. runhtc $COMPILER shooter_u_LZ4_defconfig anryl ltest
