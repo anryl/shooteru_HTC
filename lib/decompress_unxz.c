@@ -100,6 +100,12 @@
  * know later if we are being used for kernel decompression, we define
  * XZ_PREBOOT here.
  */
+#include <linux/module.h>
+#include <linux/kernel.h>
+#include <asm/unaligned.h>
+#include <linux/lzo.h>
+#include "/home/JB/private/kernels/htc_shooteru_private/lib/lzo/lzodefs.h"
+
 #ifdef STATIC
 #	define XZ_PREBOOT
 #endif
@@ -224,11 +230,11 @@ void *memmove(void *dest, const void *src, size_t size)
  * Since we need memmove anyway, would use it as memcpy too.
  * Commented out for now to avoid breaking things.
  */
-/*
+
 #ifndef memcpy
-#	define memcpy memmove
+#define memcpy memmove
 #endif
-*/
+
 
 #include "xz/xz_crc32.c"
 #include "xz/xz_dec_stream.c"

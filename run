@@ -2,13 +2,15 @@
 if [ ! -z "$1" ] ;then
 clear
 
+#COMPILER=/home/JB/GPL_toolchans4.8.5/bin/arm-eabi-
 
 COMPILER=/home/JB/GPL_toolchains/bin/arm-eabi-
+
 #COMPILER=/home/JB/Downloads/android-toolchain-eabi/bin/arm-eabi-
-. runhtc $COMPILER shooter_u_BOTH_defconfig anryl g$1
-. runhtc $COMPILER shooter_u_LZO_defconfig anryl l$1
-. runhtc $COMPILER shooter_u_LZ4_defconfig anryl l4$1
-. runhtc $COMPILER shooter_u_XZ_defconfig anryl x$1
+. runhtc $COMPILER shooter_u_BOTH_defconfig anryl g-$1
+. runhtc $COMPILER shooter_u_LZO_defconfig anryl l-$1
+. runhtc $COMPILER shooter_u_LZ4_defconfig anryl l4-$1
+. runhtc $COMPILER shooter_u_XZ_defconfig anryl x-$1
 if [ ! -z "$2" ] ;then
 cp include/media/~evmsm_camera.h include/media/msm_camera.h
 . runhtc $COMPILER shooter_u_LZO_defconfig anryl el$1

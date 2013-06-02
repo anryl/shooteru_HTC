@@ -1,6 +1,6 @@
 VERSION = 3
 PATCHLEVEL = 0
-SUBLEVEL = 75
+SUBLEVEL = 80
 EXTRAVERSION =
 NAME = Sneaky Weasel
 
@@ -384,6 +384,12 @@ KBUILD_CPPFLAGS := -D__KERNEL__
 #		   -Wno-format-security \
 #		   -fno-delete-null-pointer-checks
 #		   
+#KBUILD_CFLAGS   :=		                           -Werror \
+#                        -fomit-frame-pointer \
+#                        -fstrict-aliasing \
+#                        -Wstrict-aliasing=2 \
+#                        -Werror=strict-aliasing \
+#                        -ffast-math 
 KBUILD_CFLAGS   :=		                           -Werror \
                         -fomit-frame-pointer \
                         -fstrict-aliasing \
@@ -392,8 +398,7 @@ KBUILD_CFLAGS   :=		                           -Werror \
                         -floop-interchange \
                         -floop-strip-mine \
                         -floop-block \
-                        -ffast-math 
-		   
+                        -ffast-math 		   
 # KBUILD_CFLAGS   :=		   
 		   
 KBUILD_AFLAGS_KERNEL :=
