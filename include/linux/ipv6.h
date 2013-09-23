@@ -255,6 +255,7 @@ struct inet6_skb_parm {
 #define IP6SKB_XFRM_TRANSFORMED	1
 #define IP6SKB_FORWARDED	2
 #define IP6SKB_REROUTED		4
+#define IP6SKB_FRAGMENTED	16
 } __attribute__((__may_alias__));
 
 #define IP6CB(skb)	((struct inet6_skb_parm*)((skb)->cb))
